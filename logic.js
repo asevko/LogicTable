@@ -1,10 +1,16 @@
-function start() {
-    let custom = "(R|(L~C))";
-    calculateFormula(custom);
-}
-function calculateFormula(formula) {
+let uniqueItems;
 
-    let uniqueItems = Array.from(new Set(formula.match(/[A-Z]/g)));
+function beginProcessing() {
+    let isFormula = validateFormula();
+    let formula = document.getElementById("formula").value;
+    if (isFormula) {
+        uniqueItems = Array.from(new Set(formula.match(/[A-Z]/g)));
+        generateSignSettersFor(uniqueItems);
+        calculateFormula(formula, uniqueItems)
+    }
+}
+
+function calculateFormula(formula, uniqueItems) {
     let setOfValues = generateSetsOfValues(uniqueItems);
     let solves = [];
     for(let i = 0;i < setOfValues.length;i++){
@@ -14,8 +20,9 @@ function calculateFormula(formula) {
         }
         solves.push(calculateResult(formulaWithValues));
     }
-
+    generateTruthTable(setOfValues, solves, uniqueItems);
 }
+
 function generateSetsOfValues(unique) {
     let setOfValues = new Array(unique.length);
     for (let i = 0; i < Math.pow(2,unique.length);i++){
@@ -59,6 +66,7 @@ function calculateResult(formula) {
     }while(oldstring!==formula);
     return formula;
 }
+
 function replaceVarWithValue(string,variable,value) {
     return string.replace(variable,value);
 }
