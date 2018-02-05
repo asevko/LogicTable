@@ -278,3 +278,12 @@ table{
     box-shadow: 0 5px #666;
     transform: translateY(2px);
 }
+
+.signInput {
+    text-align: center;
+    color: white;
+    font: 13px Roboto;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    background: rgba(255, 226, 250, 0.75);
+    border-width: 0px;
+}

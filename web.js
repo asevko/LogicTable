@@ -8,6 +8,7 @@ function generateSignSettersFor(uniqueItems){
         row.appendChild(sign);
 
         let input = document.createElement('input');
+        input.className = "signInput";
         input.type = "text";
         input.id = "signValueInput";
         input.id = signId.toString();
@@ -53,7 +54,7 @@ function generateTruthTable(setOfValues, solves, uniqueItems) {
 
     let ps = document.getElementById("info");
     let formula = document.getElementById("formula").value;
-    ps.innerText = "\< Result \> :== " + formula;
+    ps.innerText = "\< Result \> ::= " + formula;
 }
 
 function removeTables() {
