@@ -1,18 +1,34 @@
 let uniqueItems;
+let solves = [];
+let viewIsPresentedOnScreen = false;
 
 function beginProcessing() {
     let isFormula = validateFormula();
     let formula = document.getElementById("formula").value;
     if (isFormula) {
+        if (viewIsPresentedOnScreen) {
+            removeTables();
+            viewIsPresentedOnScreen = false;
+        }
+        showSignSettersAndButton();
         uniqueItems = Array.from(new Set(formula.match(/[A-Z]/g)));
         generateSignSettersFor(uniqueItems);
-        calculateFormula(formula, uniqueItems)
+        //calculateFormula(formula, uniqueItems)
     }
+}
+
+function processTruthTable() {
+    let formula = document.getElementById("formula").value;
+    removeTruthTable();
+    userChoice = [];
+    solves = [];
+    fillUserChoice();
+    calculateFormula(formula, uniqueItems);
+    showTruthTable();
 }
 
 function calculateFormula(formula, uniqueItems) {
     let setOfValues = generateSetsOfValues(uniqueItems);
-    let solves = [];
     for(let i = 0;i < setOfValues.length;i++){
         let formulaWithValues = formula;
         for(let j = 0;j < uniqueItems.length ;j++){
@@ -20,7 +36,9 @@ function calculateFormula(formula, uniqueItems) {
         }
         solves.push(calculateResult(formulaWithValues));
     }
+    setOfValues = getUserChoice(setOfValues);
     generateTruthTable(setOfValues, solves, uniqueItems);
+    viewIsPresentedOnScreen = true;
 }
 
 function generateSetsOfValues(unique) {
@@ -33,7 +51,7 @@ function generateSetsOfValues(unique) {
         setOfValues[i] = setOfValues[i].split("");
 
     }
-    toLog(setOfValues,setOfValues.length,setOfValues[0].length);
+    //toLog(setOfValues,setOfValues.length,setOfValues[0].length);
     return setOfValues;
 }
 function toLog(array,x,y) {
@@ -70,3 +88,42 @@ function calculateResult(formula) {
 function replaceVarWithValue(string,variable,value) {
     return string.replace(variable,value);
 }
+
+let userChoice = [];
+const defaultValue = "-1";
+
+function fillUserChoice() {
+    for (let sign = 0; sign < uniqueItems.length; sign++) {
+        let value = document.getElementById(sign.toString()).value;
+        value = value.replace(/\s+/g, '');
+        if (value !== "0" && value !== "1") {
+            userChoice.push(defaultValue);
+        } else {
+            userChoice.push(value)
+        }
+    }
+}
+
+function getUserChoice(setOfValues) {
+    let resultChoice = [];
+    let resultSolves = [];
+    for (let row = 0; row < setOfValues.length; row ++) {
+        if (match(setOfValues[row], userChoice)) {
+            resultChoice.push(setOfValues[row]);
+            resultSolves.push(solves[row]);
+        }
+    }
+    solves = resultSolves;
+    return resultChoice;
+}
+
+
+function match(array, template){
+    for(let i = 0; i < array.length; i++) {
+        if (array[i] !== template[i] && template[i] !== defaultValue) {
+            return false;
+        }
+    }
+    return true;
+}
+

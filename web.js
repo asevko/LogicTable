@@ -55,3 +55,40 @@ function generateTruthTable(setOfValues, solves, uniqueItems) {
     let formula = document.getElementById("formula").value;
     ps.innerText = "\< Result \> :== " + formula;
 }
+
+function removeTables() {
+    removeTruthTable();
+
+    let tableSignBody = document.getElementById('tableSignBody');
+    tableSignBody.innerText = "";
+    hideAll();
+}
+
+function removeTruthTable() {
+    let truthTableHeader = document.getElementById("truthTableHeader");
+    truthTableHeader.innerHTML = "";
+
+    let truthTableBody = document.getElementById('truthTableBody');
+    truthTableBody.innerHTML = "";
+
+    let ps = document.getElementById("info");
+    ps.innerText = "";
+    document.getElementById("truth-table").hidden = true;
+
+}
+
+function showSignSettersAndButton() {
+    document.getElementById("equivalence").hidden = false;
+    document.getElementById("interpretation").hidden = false;
+
+}
+
+function showTruthTable() {
+    document.getElementById("truth-table").hidden = false;
+}
+
+function hideAll() {
+    document.getElementById("equivalence").hidden = true;
+    document.getElementById("interpretation").hidden = true;
+    document.getElementById("truth-table").hidden = true;
+}

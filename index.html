@@ -30,7 +30,7 @@
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <button class="btn" id="correct" onclick="beginProcessing()">Set values</button>
     </div>
-    <div id="interpretation">
+    <div id="interpretation" hidden>
         <p class="table-header">Set values of signs</p>
         <table class="bordered">
             <thead>
@@ -41,8 +41,9 @@
             </thead>
             <tbody id="tableSignBody"></tbody>
         </table>
+        <img src="img/equivalence.png" id="equivalence" onclick="processTruthTable()" hidden>
     </div>
-    <div id="truth-table">
+    <div id="truth-table" hidden>
         <p class="table-header">Truth table</p>
         <table class="bordered">
             <thead id="truthTableHeader"></thead>
