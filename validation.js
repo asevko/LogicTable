@@ -2,7 +2,9 @@ let stringToCheck;
 
 function parseFormula(){
     let simplifier = "A";
-    if (stringToCheck === simplifier) return false;
+    if (stringToCheck === simplifier ||
+        stringToCheck.replace(/[A-Z]/, simplifier).match(simplifier))
+        return true;
     let binaryFormulaRegExp = /\(\D[→~&|]\D\)/g;
     let oldString = stringToCheck;
     while(true){
